@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
 import getDB from "./utils/db.js";
+import userRoute from "./routes/user.route.js";
 
 dotenv.config({});
 
@@ -25,6 +26,8 @@ app.get("/health-check", (req, res) => {
     message: "Backend service running",
   });
 });
+
+app.use("/user", userRoute);
 
 app.listen(PORT, () => {
   getDB();

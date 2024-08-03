@@ -18,7 +18,7 @@ const companySchema = new mongoose.Schema(
     logo: {
       type: String,
     },
-    registered_by: {
+    registeredBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

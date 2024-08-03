@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 
+import getDB from "./utils/db.js";
+
 dotenv.config({});
 
 const PORT = process.env.BACKEND_SERVICE_PORT || 3000;
@@ -25,5 +27,6 @@ app.get("/health-check", (req, res) => {
 });
 
 app.listen(PORT, () => {
+  getDB();
   console.log(`Listening to server at PORT: ${PORT}`);
 });

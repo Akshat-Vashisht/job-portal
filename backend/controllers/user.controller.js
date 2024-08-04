@@ -6,7 +6,7 @@ export const register = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, password, role } = req.body;
     if (!fullName || !email || !phoneNumber || !password || !role) {
-      return res.status(400).json({
+      return res.status(422).json({
         message: "All fields are not filled",
       });
     }

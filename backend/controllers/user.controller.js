@@ -6,13 +6,13 @@ export const register = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, password, role } = req.body;
     if (!fullName || !email || !phoneNumber || !password || !role) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "All fields are not filled",
       });
     }
     const user = await User.findOne({ email });
     if (user) {
-      res.status(409).json({
+      return res.status(409).json({
         message: "Email already registered",
       });
     }
@@ -27,7 +27,7 @@ export const register = async (req, res) => {
       role,
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       message: "Account created successfully",
     });
   } catch (error) {
@@ -40,7 +40,7 @@ export const login = async (req, res) => {
     const { email, password, role } = req.body;
 
     if (!email || !password || !role) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "All fields are not filled",
       });
     }
@@ -48,20 +48,20 @@ export const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         message: `${email} is not registered`,
       });
     }
 
     const isPasswordSame = await bcrypt.compare(password, user.password);
     if (!isPasswordSame) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Wrong password",
       });
     }
 
     if (role != user.role) {
-      res.status(400).json({
+      return res.status(400).json({
         mesage: `Account registered as ${user.role}, kindly login with that role`,
       });
     }
@@ -81,7 +81,7 @@ export const login = async (req, res) => {
       role: user.role,
       profile: user.profile,
     };
-    res
+    return res
       .status(200)
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
@@ -99,7 +99,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    res.cookie("token", "", { maxAge: 0 }).json({
+    return res.cookie("token", "", { maxAge: 0 }).json({
       message: "Logged out successfully",
     });
   } catch (error) {
@@ -131,7 +131,7 @@ export const updateProfile = async (req, res) => {
       { returnOriginal: false }
     );
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Updated successfully",
       user,
     });

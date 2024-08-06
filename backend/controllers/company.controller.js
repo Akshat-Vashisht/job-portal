@@ -55,7 +55,7 @@ export const getCompanyById = async (req, res) => {
     const companyId = req.params.id;
     if (!mongoose.isValidObjectId(companyId)) {
       return res.status(404).json({
-        message: `Company with id ${companyId} not found`,
+        message: `Company ID: ${companyId} is not a valid ID`,
       });
     }
     const company = await Company.findById(companyId);
@@ -77,10 +77,10 @@ export const updateCompany = async (req, res) => {
     const { name, description, website, location } = req.body;
     const file = req.file;
     const companyId = req.params.id;
-    
+
     if (!mongoose.isValidObjectId(companyId)) {
       return res.status(404).json({
-        message: `Company with id ${companyId} not found`,
+        message: `Company ID: ${companyId} is not a valid ID`,
       });
     }
     const updatedCompany = await Company.findByIdAndUpdate(

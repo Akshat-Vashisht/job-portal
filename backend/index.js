@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import getDB from "./utils/db.js";
 import userRouter from "./routes/user.route.js";
 import companyRouter from "./routes/company.route.js";
+import jobRouter from "./routes/job.route.js";
 
 dotenv.config({});
 
@@ -30,6 +31,7 @@ app.get("/health-check", (req, res) => {
 
 app.use("/user", userRouter);
 app.use("/company", companyRouter);
+app.use("/job", jobRouter);
 
 app.listen(PORT, () => {
   getDB();
